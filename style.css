@@ -150,3 +150,16 @@ margin: 5px 10px;
 text-align: center;
 letter-spacing: 2px;
 }
+
+.modal {
+    width: 700px;
+    height: 500px;
+    background-color: pink;
+    position: fixed;
+    top: 200px;
+    left: 200px;
+}
+
+.noMostrar {
+    display: none
+}

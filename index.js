@@ -73,38 +73,74 @@ const gatos = [
 ];
 
 
-const seccionPrincipal = document.querySelector(".adopt")
+// const seccionPrincipal = document.querySelector(".adopt")
 
-const gato = {
-    name: 'Calamardo',
-    shortDesc:
-        'Dicen que de noche, cuando nadie lo puede escuchar, invoca a Cthulu. Muy mimoso.',
-    longDesc:
-        'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit libero dolorum aliquam error expedita distinctio porro ducimus ex repellendus laboriosam. Sequi, doloribus autem? Unde commodi assumenda consequatur ratione numquam distinctio nihil blanditiis quae debitis sed eligendi modi architecto omnis aspernatur officia molestiae, vero nemo a quibusdam? Voluptatum eveniet blanditiis impedit.',
-    img:
-        'https://misanimales.com/wp-content/uploads/2018/07/mito-del-gato-negro.jpg',
-    colores: ['negro'],
-    sexo: 'm',
-}
+// const gato = {
+//     name: 'Calamardo',
+//     shortDesc:
+//         'Dicen que de noche, cuando nadie lo puede escuchar, invoca a Cthulu. Muy mimoso.',
+//     longDesc:
+//         'Lorem ipsum dolor, sit amet consectetur adipisicing elit. Suscipit libero dolorum aliquam error expedita distinctio porro ducimus ex repellendus laboriosam. Sequi, doloribus autem? Unde commodi assumenda consequatur ratione numquam distinctio nihil blanditiis quae debitis sed eligendi modi architecto omnis aspernatur officia molestiae, vero nemo a quibusdam? Voluptatum eveniet blanditiis impedit.',
+//     img:
+//         'https://misanimales.com/wp-content/uploads/2018/07/mito-del-gato-negro.jpg',
+//     colores: ['negro'],
+//     sexo: 'm',
+// }
 
-seccionPrincipal.innerHTML = `
-    <div class="card">
-        <div class="card_img">
-            <img src="${gato.img}"/>
-        </div>
-        <div class="card_info">
-            <h3>${gato.name}</h3>
-            <p>${gato.shortDesc}</p>
-        </div>
-    </div>
-`
+// seccionPrincipal.innerHTML = `
+//     <div class="card">
+//         <div class="card_img">
+//             <img src="${gato.img}"/>
+//         </div>
+//         <div class="card_info">
+//             <h3>${gato.name}</h3>
+//             <p>${gato.shortDesc}</p>
+//         </div>
+//     </div>
+// `
 
-const cont = document.querySelector(".adopt")
+// const cont = document.querySelector(".adopt")
 
-cont.innerHTML = ``
+// cont.innerHTML = ``
 
-gatos.map(gato => {
-    cont.innerHTML += `<div class="card">
+// gatos.map(gato => {
+//     cont.innerHTML += `<div class="card">
+//     <div class="card_img">
+//       <img src="${gato.img}" />
+//     </div>
+//     <div class="card_info">
+//       <h3>${gato.name}</h3>
+//       <p>
+//         ${gato.shortDesc}
+//       </p>
+//       <button>Ver mas</button>
+//     <i id="corazon" class="fa fa-heart"></i> <p id="likes">0<p>
+//     </div>
+//   </div>`;
+// });
+
+
+// const contExtra = document.querySelector(".adopt-extra");
+
+// contExtra.innerHTML = `<div class="card">  
+// <div class="card_img">
+//     <img src="${gatos[0].img}"/>
+// </div>
+//     <div class="card_info">
+//         <h3>${gatos[0].name}</h3>
+//         <p>${gatos[0].shortDesc}</p>
+//         <button>Ver más</button>
+//         <i id="corazon" class="fa fa-heart"></i><p id="likes">0</p>
+//     </div>
+// </div>`
+
+
+const contenedor = document.querySelector('.adopt');
+
+const mostrarEnHTML = (array) => {
+  contenedor.innerHTML = '';
+  array.map(gato => {
+    contenedor.innerHTML += `<div class="card" data-sexo="${gato.sexo}">
     <div class="card_img">
       <img src="${gato.img}" />
     </div>
@@ -113,26 +149,17 @@ gatos.map(gato => {
       <p>
         ${gato.shortDesc}
       </p>
-      <button>Ver mas</button>
+      <button data-name="${gato.name}" class="botonVerMas">Ver mas</button>
+  
     <i id="corazon" class="fa fa-heart"></i> <p id="likes">0<p>
     </div>
   </div>`;
-});
+  });
+};
 
+// console.log(gatos)
+mostrarEnHTML(gatos);
 
-const contExtra = document.querySelector(".adopt-extra");
-
-contExtra.innerHTML = `<div class="card">  
-<div class="card_img">
-    <img src="${gatos[0].img}"/>
-</div>
-    <div class="card_info">
-        <h3>${gatos[0].name}</h3>
-        <p>${gatos[0].shortDesc}</p>
-        <button>Ver más</button>
-        <i id="corazon" class="fa fa-heart"></i><p id="likes">0</p>
-    </div>
-</div>`
 
 const corazones = document.querySelectorAll("#corazon")
 const likes = document.querySelectorAll("#likes")
@@ -168,3 +195,225 @@ corazones.forEach((corazon, indiceCorazon) => {   // para ver a q corazon hicier
 //     cantidadDeLikes++
 //     likes.textContent = cantidadDeLikes
 // }
+
+
+const botones = document.querySelectorAll(".botonVerMas")
+const modal = document.querySelector(".modal")
+const modalContenido = document.querySelector(".modalContenido")
+const cerrarModal = document.querySelector("#cerrarModal")
+
+
+botones.forEach((boton, indiceBoton) => {
+  boton.onclick = () => {
+    modal.classList.remove("noMostrar")
+    console.log(indiceBoton)
+
+    modalContenido.innerHTML = `
+    Nombre: ${gatos[indiceBoton].name}
+    Descripcion: ${gatos[indiceBoton].longDesc}
+    `
+  }
+})
+
+///otra opcion para lo anterior:
+
+// botones.forEach((boton, indiceBoton) => {
+//   boton.onclick = () => {
+//     gatos.map((gato) => {
+//       if (gato.name === boton.dataset.name) {
+//         modalContenido.innerHTML = `
+//         Nombre: ${gato.name}
+//         Descripcion: ${gato.longDesc}
+//         `
+//       }
+//     })
+//     modal.classList.remove("noMostrar")    
+//   }
+// })
+
+cerrarModal.onclick = () => {
+  modal.classList.add("noMostrar")
+}
+
+// filtro por sexo
+
+const form = document.querySelector('form');
+
+form.onsubmit = e => {
+  e.preventDefault();
+
+  const radios = document.querySelectorAll('input[type=radio]');
+
+  const baneadas = ['Marian', 'Angie', 'Euge', 'Agus'];
+
+  radios.forEach(radio => {
+    if (radio.checked) {
+      contenedor.innerHTML = '';
+
+      if (radio.value === 'i') {
+        return mostrarEnHTML(gatos);
+      }
+
+      const gatosFiltrados = gatos.filter(gato => {
+        return gato.sexo === radio.value;
+      });
+
+      mostrarEnHTML(gatosFiltrados);
+    }
+  });
+};
+
+
+// LECCION DE ESTA CLASE:
+// primero dejo la data en javascript tal como la quiero
+// luego la paso a html 
+
+
+// DEFINICION:  funciones puras y funciones impuras
+
+// mala definicion: una funcion pura trabaja solo con informacion contenida dentro de si,
+// sin modificar nada fuera de su scope. Son imposibles de testear las impuras, los efectos secundarios son lo peor qe tienen 
+//(que son cambios q estan fuera del scope de la funcion que no podemos ver a primera vista)
+
+// buena: dados los mismos parametros de entrada, tendremos la misma info de salida
+// no tiene efectos secundarios (o efectos colaterales)siempre tratamos trabajar con funciones puras. Son las que se usan para testear
+
+
+let numero = 18
+
+
+const funcionImpura = () => {
+  numero++
+}
+
+funcionImpura()
+console.log(numero)
+funcionImpura()
+console.log(numero)
+
+const funcionPura = (numeroParam) => {  // recibe parametro
+  numeroParam++
+  return numeroParam
+}
+
+const primero = funcionPura(numero)
+const segundo = funcionPura(numero)
+
+console.log(primero)
+console.log(segundo)
+
+
+// NO USAR FUNCIONES QUE MODIFIQUEN INFO MÁS ALLA DE SU SCOPE, POR ESO mejor usar siempre funciones PURAS
+
+// METODOS IMPUROS Q MODIFICAN EL ARRAY ORIGINAL: push, pop, unshift, shift !!!!!
+
+
+
+
+
+
+
+
+
+
+// SIEMPRE mantener una copia de la info original:
+
+const baneadas = ["marian", "angie", "euge", "agus"]
+const baneadas2 = ["hola", "chau"]
+
+// const baneadasMasLargo = [... baneadas]  ES UNA MANERA
+
+const baneadasMasLargo = baneadas.map((baneada) => {
+  return baneada + 1
+})   // ES OTRA MANERA
+
+baneadasMasLargo.push("Sol")
+
+console.log(baneadas)
+console.log(baneadasMasLargo)
+
+
+
+
+
+
+
+
+
+// OPERACIONES INMUTABLES
+
+const masBaneadas = baneadas
+
+masBaneadas.push(baneadas)
+
+console.log(baneadas)
+console.log(masBaneadas)
+
+const persona = {
+  nombre: "Ana", 
+  edad: 28,
+  apodo: "La NO dictadora"
+}
+
+const persona2 = {
+  nombre: "Ana2", 
+  edad: 282,
+  apodo: "La NO dictadora2"
+}
+
+const masPersona = persona
+
+masPersona.edad = 28
+
+console.log(persona)
+console.log(masPersona)
+
+
+// COPIAS DE SEGURIDAD :
+
+// // ARRAYS 
+
+const copiaArray = [...baneadas]
+
+// // OBJETOS 
+
+const copiaObjeto = {...persona}
+
+
+// UNIR ARRAYS con seguridad sin modificar array original, o sea SIN PUSH
+
+const dosArraysUnidos = [...baneadas, ...baneadas2]
+
+
+// UNIR OBJETOS con seguridad sin modificar obj original, o sea SIN PUSH
+
+const dosObjetosUnidos = {...persona, ...persona2}
+
+
+console.log(dosArraysUnidos)
+
+console.log(dosObjetosUnidos)
+
+
+// AGREGAR ELEMENTO A ARRAY ORIGINAL, sin modificar array original
+
+const baneadasMasSol = [...baneadas, "Sol"]
+
+// AGREGAR PROPIEDAD A OBJETO ORIGINAL, sin modificar objeto original
+
+const personaConMasPropiedades = {...persona, hijos: 2}
+
+// ELIMINAR PROPIEDAD A OBJETO ORIGINAL, sin modificar objeto original
+
+const {edad, ...masDatos} = persona
+
+console.log(masDatos) // hacemos copia de persona en MasDatos sin edad
+
+// MODIFICAR ELEMENTO A OBJETO ORIGINAL, sin modificar objeto original
+
+const personaActualizada = {...persona, apodo: "Nani"} // modificamos el apodo
+
+// Lo mismo para arrays
+
+
+
